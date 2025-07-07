@@ -9,6 +9,7 @@ Este projeto é a implementação de um back-end para uma plataforma de blogging
 * TypeScript
 * MongoDB
 * Docker
+* Swagger (OpenAPI)
 
 ## Como Rodar o Projeto
 
@@ -20,8 +21,10 @@ Este projeto é a implementação de um back-end para uma plataforma de blogging
     ```
 4.  A API estará disponível em `http://localhost:3000`.
 
-## Endpoints da API (Em construção)
+## Documentação da API
 
-* `POST /posts` - Cria um novo post.
-* `GET /posts` - Lista todos os posts.
-* ... (e assim por diante)
+A documentação completa e interativa da API foi gerada com Swagger e está disponível enquanto a aplicação estiver rodando.
+
+* **URL da Documentação:** [http://localhost:3000/api](http://localhost:3000/api)
+
+Nesta interface, é possível ver todos os endpoints, seus parâmetros, schemas de resposta e executar testes diretamente pelo navegador.
