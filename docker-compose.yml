@@ -1,41 +1,25 @@
 services:
-
   api:
-    # Constrói a imagem a partir do Dockerfile na pasta atual
     build: .
     container_name: tech-challenge-api
-    # Comando para iniciar a aplicação em modo de desenvolvimento (com hot-reload)
     command: npm run start:dev
-    # Mapeia a porta 3000 do container para a porta 3000 da sua máquina
     ports:
       - "3000:3000"
-    # Volumes para sincronizar o código e evitar sobrescrever o node_modules
     volumes:
-      # Sincroniza a pasta atual com a pasta /usr/src/app dentro do container
       - .:/usr/src/app
-      # Impede que o node_modules local sobrescreva o do container
       - /usr/src/app/node_modules
-    # Define as variáveis de ambiente necessárias para a API
     environment:
-      # A URL de conexão com o MongoDB. 'mongo' é o nome do serviço do banco de dados abaixo.
       - DATABASE_URL=mongodb://mongo:27017/tech-challenge-blog
-    # Garante que o serviço 'mongo' inicie antes da 'api'
     depends_on:
       - mongo
 
-  # Serviço do Banco de Dados MongoDB
   mongo:
-    # Usa a imagem oficial mais recente do MongoDB
     image: mongo:latest
     container_name: tech-challenge-db
-    # Mapeia a porta padrão do Mongo para que possamos acessá-lo da nossa máquina se necessário
     ports:
       - "27017:27017"
-    # Cria um volume para persistir os dados do banco de dados
-    # Sem isso, você perderia todos os dados ao reiniciar o container
     volumes:
       - mongo-data:/data/db
 
-# Declaração dos volumes nomeados para persistência
 volumes:
   mongo-data:
