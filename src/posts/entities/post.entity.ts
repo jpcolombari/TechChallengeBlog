@@ -8,11 +8,13 @@ export class Post {
   @Prop({ required: true })
   title: string;
 
-  @Prop({ required: true }) 
+  @Prop({ required: true })
   content: string;
 
-  @Prop({ required: true }) 
+  @Prop({ required: true })
   author: string;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
+
+PostSchema.index({ title: 'text', content: 'text' });

@@ -10,8 +10,7 @@ export class PostsService {
   constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {}
 
   async create(createPostDto: CreatePostDto): Promise<Post> {
-    const createdPost = new this.postModel(createPostDto);
-    return createdPost.save();
+    return this.postModel.create(createPostDto);
   }
 
   async findAll(): Promise<Post[]> {
@@ -30,7 +29,6 @@ export class PostsService {
     const updatedPost = await this.postModel
       .findByIdAndUpdate(id, updatePostDto, { new: true })
       .exec();
-
     if (!updatedPost) {
       throw new NotFoundException(`Post com o ID "${id}" não encontrado.`);
     }
@@ -43,5 +41,9 @@ export class PostsService {
       throw new NotFoundException(`Post com o ID "${id}" não encontrado.`);
     }
     return deletedPost;
+  }
+
+  async search(term: string): Promise<Post[]> {
+    return this.postModel.find({ $text: { $search: term } }).exec();
   }
 }
