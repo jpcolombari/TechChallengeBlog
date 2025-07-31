@@ -11,6 +11,7 @@ Este projeto é a implementação de um back-end para uma plataforma de blogging
 * **Mongoose:** ODM (Object-Document Mapper) para modelagem e interação com o MongoDB.
 * **Docker & Docker Compose:** Ferramentas para containerização da aplicação e do banco de dados, garantindo consistência entre ambientes.
 * **Swagger (OpenAPI):** Geração de documentação interativa e visual da API.
+* **Redoc:** Geração de documentação estática e de fácil leitura da API.
 * **Jest:** Framework de testes para garantir a qualidade e o funcionamento da lógica de negócio.
 * **GitHub Actions:** Ferramenta de CI/CD para automação de testes a cada push no repositório.
 
@@ -64,9 +65,13 @@ graph TD;
 
 * **Por que Docker?** A containerização foi adotada para resolver o clássico problema do "funciona na minha máquina". Com o Docker, garantimos que o ambiente de desenvolvimento seja idêntico ao de produção e ao de qualquer outro desenvolvedor, eliminando inconsistências. O `docker-compose` simplifica o setup de todo o ambiente (API + Banco de Dados) com um único comando (`docker compose up`), facilitando o início do trabalho no projeto.
 
+* **Por que Swagger & Redoc?** Foram implementadas duas documentações para atender a públicos diferentes. O Swagger UI (`/api`) foi escolhido por sua capacidade de testes interativos, agilizando o desenvolvimento. O Redoc (`/docs`) foi adicionado para fornecer uma documentação estática, com um layout mais limpo e focado na leitura, ideal para consumidores da API.
+
 * **Por que Testes Unitários com Mocking?** A decisão de testar a camada de serviço (`PostsService`) de forma isolada, simulando ("mockando") a resposta do banco de dados, garante que nossos testes sejam rápidos, confiáveis e foquem exclusivamente na lógica de negócio, sem depender de uma conexão real com o banco.
 
-* **Por que GitHub Actions para CI?** A automação dos testes com GitHub Actions (CI - Integração Contínua) garante que cada nova alteração no código seja validada automaticamente. Isso previne a introdução de bugs e mantém a estabilidade e a qualidade da base de código ao longo do tempo.
+* **Por que GitHub Actions para CI/CD?** A automação foi dividida em duas etapas para cumprir os requisitos de testes e deploy:
+    * **CI (Continuous Integration):** A cada `push` ou `pull request`, um workflow é disparado para instalar as dependências e rodar a suíte de testes unitários. Isso garante que novas alterações não quebrem a funcionalidade existente.
+    * **CD (Continuous Deployment):** Se os testes passarem em um `push` na branch principal, um segundo job é acionado para construir a imagem Docker final da aplicação e publicá-la no GitHub Container Registry. Isso simula um pipeline de deploy real, deixando uma versão testada e empacotada da aplicação pronta para ser implantada em um ambiente de produção.
 
 ## Como Rodar o Projeto
 
