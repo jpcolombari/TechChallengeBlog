@@ -84,9 +84,13 @@ graph TD;
 
 ## Guia da API (Tutorial de Uso)
 
-A forma mais recomendada para interagir com a API é através da documentação interativa do Swagger, que está sempre atualizada com o código.
+A API possui duas documentações geradas automaticamente, cada uma com um propósito diferente:
 
-* **URL da Documentação Interativa:** **[http://localhost:3000/api](http://localhost:3000/api)**
+* **Documentação Interativa (Swagger UI):** Ideal para testar os endpoints diretamente pelo navegador.
+    * **URL:** **[http://localhost:3000/api](http://localhost:3000/api)**
+
+* **Documentação para Leitura (Redoc):** Apresenta a API em um formato limpo e de fácil leitura, ideal para entender o funcionamento dos recursos.
+    * **URL:** **[http://localhost:3000/docs](http://localhost:3000/docs)**
 
 Para referência e entendimento, abaixo está um guia detalhado de cada endpoint disponível.
 
