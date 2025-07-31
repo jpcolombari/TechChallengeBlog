@@ -82,12 +82,82 @@ graph TD;
     ```
 4.  **Acesso:** A API estará disponível em `http://localhost:3000`.
 
-## Guia da API
+## Guia da API (Tutorial de Uso)
 
-A documentação completa e interativa da API foi gerada com Swagger. É a forma recomendada para testar os endpoints.
+A forma mais recomendada para interagir com a API é através da documentação interativa do Swagger, que está sempre atualizada com o código.
 
 * **URL da Documentação Interativa:** **[http://localhost:3000/api](http://localhost:3000/api)**
 
-Nesta interface, é possível ver todos os endpoints, seus parâmetros, schemas de resposta e executar testes diretamente pelo navegador.
+Para referência e entendimento, abaixo está um guia detalhado de cada endpoint disponível.
 
-*(Uma descrição detalhada de cada endpoint, com exemplos de JSON, pode ser encontrada nas versões anteriores do histórico deste README, se necessário.)*
+---
+
+### **1. Criar um Novo Post**
+* **Endpoint:** `POST /posts`
+* **Descrição:** Cria uma nova postagem no blog.
+* **Corpo da Requisição (`Request Body`):** É necessário enviar um objeto JSON com título, conteúdo e autor.
+    ```json
+    {
+      "title": "O que é Nest.js?",
+      "content": "Nest.js é um framework Node.js para construir aplicações de back-end eficientes e escaláveis.",
+      "author": "João Colombari"
+    }
+    ```
+* **Resposta de Sucesso (`201 Created`):** Retorna o objeto do post recém-criado.
+
+---
+
+### **2. Listar Todos os Posts**
+* **Endpoint:** `GET /posts`
+* **Descrição:** Retorna uma lista com todas as postagens existentes.
+* **Resposta de Sucesso (`200 OK`):** Retorna um array de objetos de post.
+
+---
+
+### **3. Buscar um Post Específico por ID**
+* **Endpoint:** `GET /posts/{id}`
+* **Descrição:** Retorna uma postagem específica com base no seu `_id`.
+* **Parâmetros da URL:**
+    * `id` (string): O ID do post a ser buscado.
+* **Resposta de Sucesso (`200 OK`):** Retorna o objeto do post encontrado.
+* **Resposta de Erro (`404 Not Found`):** É retornada se nenhum post for encontrado com o ID fornecido.
+
+---
+
+### **4. Atualizar um Post**
+* **Endpoint:** `PUT /posts/{id}`
+* **Descrição:** Atualiza as informações de uma postagem existente.
+* **Parâmetros da URL:**
+    * `id` (string): O ID do post a ser atualizado.
+* **Corpo da Requisição (`Request Body`):** Envie um objeto JSON com os campos que deseja alterar.
+    ```json
+    {
+      "content": "Este é um novo conteúdo atualizado para a postagem."
+    }
+    ```
+* **Resposta de Sucesso (`200 OK`):** Retorna o objeto completo do post **após** a atualização.
+* **Resposta de Erro (`404 Not Found`):** É retornada se o post a ser atualizado não for encontrado.
+
+---
+
+### **5. Excluir um Post**
+* **Endpoint:** `DELETE /posts/{id}`
+* **Descrição:** Remove permanentemente uma postagem do banco de dados.
+* **Parâmetros da URL:**
+    * `id` (string): O ID do post a ser excluído.
+* **Resposta de Sucesso (`200 OK`):** Retorna o objeto do post que acabou de ser removido.
+* **Resposta de Erro (`404 Not Found`):** É retornada se o post a ser excluído não for encontrado.
+
+---
+
+### **6. Buscar Posts por Palavra-Chave**
+* **Endpoint:** `GET /posts/search`
+* **Descrição:** Retorna uma lista de posts cujo título ou conteúdo corresponda ao termo de busca.
+* **Parâmetros de Consulta (`Query String`):**
+    * `term` (string): A palavra-chave a ser buscada.
+    * **Exemplo de uso:** `/posts/search?term=docker`
+* **Resposta de Sucesso (`200 OK`):** Retorna um array com os posts encontrados.
+
+## Desafios e Aprendizados
+
+Durante o desenvolvimento deste projeto, enfrentamos alguns desafios técnicos que se tornaram grandes oportunidades de aprendizado, como a configuração do ambiente Docker, a simulação de dependências (mocking) para testes unitários e a criação do pipeline de integração contínua com GitHub Actions.
