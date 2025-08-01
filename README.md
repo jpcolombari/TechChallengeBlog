@@ -1,8 +1,8 @@
-# Tech Challenge - Blog API
+# 🚀 Tech Challenge - Blog API
 
 Este projeto é a implementação de um back-end para uma plataforma de blogging, desenvolvido como parte do Tech Challenge da Pós-Graduação em Full Stack Development da FIAP. O objetivo foi construir uma API RESTful robusta, escalável e de fácil manutenção para gerenciar as postagens de um blog.
 
-## Tecnologias Utilizadas
+## 🛠️ Tecnologias Utilizadas
 
 * **Node.js:** Ambiente de execução para JavaScript no servidor.
 * **Nest.JS:** Framework Node.js para construir aplicações eficientes e escaláveis, utilizando TypeScript.
@@ -15,11 +15,11 @@ Este projeto é a implementação de um back-end para uma plataforma de blogging
 * **Jest:** Framework de testes para garantir a qualidade e o funcionamento da lógica de negócio.
 * **GitHub Actions:** Ferramenta de CI/CD para automação de testes a cada push no repositório.
 
-## Arquitetura do Sistema
+## 🧱 Arquitetura do Sistema
 
 Esta seção descreve os componentes principais do sistema, como eles se comunicam e as justificativas por trás das decisões de arquitetura, conforme solicitado para a avaliação do projeto.
 
-### 1. Principais Componentes
+### 1️⃣ Principais Componentes
 
 O sistema é composto por três componentes principais que trabalham em conjunto dentro de um ambiente containerizado:
 
@@ -27,7 +27,7 @@ O sistema é composto por três componentes principais que trabalham em conjunto
 * **Banco de Dados:** Um container MongoDB que armazena e gerencia todos os dados da aplicação, como as informações das postagens.
 * **Ambiente Docker:** Uma camada de virtualização que encapsula tanto a API quanto o Banco de Dados. Ele garante que o sistema funcione de forma idêntica em qualquer máquina, seja de desenvolvimento ou produção.
 
-### 2. Diagrama de Fluxo e Comunicação
+### 2️⃣ Diagrama de Fluxo e Comunicação
 
 O diagrama abaixo ilustra a arquitetura de produção, com os serviços hospedados em plataformas de nuvem distintas.
 
@@ -40,7 +40,7 @@ graph TD;
     subgraph Nuvem Render.com
         B[API REST em Nest.js]
     end
-    
+
     subgraph Nuvem MongoDB Atlas
         C[Banco de Dados MongoDB]
     end
@@ -60,7 +60,7 @@ graph TD;
 5.  O Banco de Dados processa a solicitação e retorna os dados para a API.
 6.  A API formata esses dados em uma **Resposta HTTP** (geralmente em formato JSON) e a envia de volta para o Usuário.
 
-### 3. Justificativas das Decisões de Arquitetura
+### 3️⃣ Justificativas das Decisões de Arquitetura
 
 * **Por que Nest.js?** Escolhemos o Nest.js sobre frameworks mais minimalistas como o Express puro por sua arquitetura opinativa baseada em Módulos, Controllers e Services. Isso promove um código altamente organizado, de fácil manutenção e testável, o que é crucial para a escalabilidade do projeto. O uso nativo de TypeScript e o sistema de injeção de dependência também foram fatores decisivos.
 
@@ -76,7 +76,7 @@ graph TD;
     * **CI (Continuous Integration):** A cada `push` ou `pull request`, um workflow é disparado para instalar as dependências e rodar a suíte de testes unitários. Isso garante que novas alterações não quebrem a funcionalidade existente.
     * **CD (Continuous Deployment):** Se os testes passarem em um `push` na branch principal, um segundo job é acionado para construir a imagem Docker final da aplicação e publicá-la no GitHub Container Registry. Isso simula um pipeline de deploy real, deixando uma versão testada e empacotada da aplicação pronta para ser implantada em um ambiente de produção.
 
-## Como Rodar o Projeto (Ambiente de Desenvolvimento Local)
+## ⚙️ Como Rodar o Projeto (Ambiente de Desenvolvimento Local)
 
 1.  **Pré-requisitos:** É necessário ter o `Docker` e o `Docker Compose` instalados em sua máquina.
 2.  **Clone o Repositório:**
@@ -90,7 +90,7 @@ graph TD;
     ```
 4.  **Acesso:** A API estará disponível em `http://localhost:3000`.
 
-## Acesso ao Projeto em Produção
+## 🌐 Acesso ao Projeto em Produção
 
 A aplicação foi implantada na plataforma Render e está disponível publicamente nos seguintes endereços:
 
@@ -100,7 +100,7 @@ A aplicação foi implantada na plataforma Render e está disponível publicamen
 
 > **Atenção:** A aplicação está hospedada no plano gratuito do Render e hiberna ("dorme") após 15 minutos de inatividade. O **primeiro acesso pode levar de 30 a 60 segundos para "acordar" o serviço**. Após o carregamento inicial, a API funcionará normalmente.
 
-## Guia da API (Tutorial de Uso)
+## 📚 Guia da API (Tutorial de Uso)
 
 A API possui duas documentações geradas automaticamente, cada uma com um propósito diferente:
 
@@ -180,6 +180,6 @@ Para referência e entendimento, abaixo está um guia detalhado de cada endpoint
     * **Exemplo de uso:** `/posts/search?term=docker`
 * **Resposta de Sucesso (`200 OK`):** Retorna um array com os posts encontrados.
 
-## Desafios e Aprendizados
+## 🎯 Desafios e Aprendizados
 
 Durante o desenvolvimento deste projeto, enfrentamos alguns desafios técnicos que se tornaram grandes oportunidades de aprendizado, como a configuração do ambiente Docker, a simulação de dependências (mocking) para testes unitários e a criação do pipeline de integração contínua com GitHub Actions.
