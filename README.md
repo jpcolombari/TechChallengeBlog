@@ -29,21 +29,24 @@ O sistema é composto por três componentes principais que trabalham em conjunto
 
 ### 2. Diagrama de Fluxo e Comunicação
 
-O diagrama abaixo ilustra como os componentes se comunicam, desde a requisição do usuário até a resposta final.
+O diagrama abaixo ilustra a arquitetura de produção, com os serviços hospedados em plataformas de nuvem distintas.
 
 ```mermaid
 graph TD;
-    subgraph Ambiente Local do Usuário
+    subgraph Internet
         A[Usuário/Cliente]
     end
 
-    subgraph Ambiente Docker
+    subgraph Nuvem Render.com
         B[API REST em Nest.js]
+    end
+    
+    subgraph Nuvem MongoDB Atlas
         C[Banco de Dados MongoDB]
     end
 
-    A -- Requisição HTTP (GET, POST, etc.) --> B;
-    B -- Consulta / Escrita de dados (via Mongoose) --> C;
+    A -- Requisição HTTP --> B;
+    B -- Conexão Segura --> C;
     C -- Retorna dados --> B;
     B -- Resposta HTTP (JSON) --> A;
 ```
@@ -73,7 +76,7 @@ graph TD;
     * **CI (Continuous Integration):** A cada `push` ou `pull request`, um workflow é disparado para instalar as dependências e rodar a suíte de testes unitários. Isso garante que novas alterações não quebrem a funcionalidade existente.
     * **CD (Continuous Deployment):** Se os testes passarem em um `push` na branch principal, um segundo job é acionado para construir a imagem Docker final da aplicação e publicá-la no GitHub Container Registry. Isso simula um pipeline de deploy real, deixando uma versão testada e empacotada da aplicação pronta para ser implantada em um ambiente de produção.
 
-## Como Rodar o Projeto
+## Como Rodar o Projeto (Ambiente de Desenvolvimento Local)
 
 1.  **Pré-requisitos:** É necessário ter o `Docker` e o `Docker Compose` instalados em sua máquina.
 2.  **Clone o Repositório:**
@@ -86,6 +89,14 @@ graph TD;
     docker compose up --build
     ```
 4.  **Acesso:** A API estará disponível em `http://localhost:3000`.
+
+## Acesso ao Projeto em Produção
+
+A aplicação foi implantada na plataforma Render e está disponível publicamente nos seguintes endereços:
+
+* **API Base URL:** `https://techchallengeblog.onrender.com`
+* **Documentação Interativa (Swagger):** **[https://techchallengeblog.onrender.com/api](https://techchallengeblog.onrender.com/api)**
+* **Documentação Estática (Redoc):** **[https://techchallengeblog.onrender.com/docs](https://techchallengeblog.onrender.com/docs)**
 
 ## Guia da API (Tutorial de Uso)
 
