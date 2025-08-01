@@ -98,6 +98,8 @@ A aplicação foi implantada na plataforma Render e está disponível publicamen
 * **Documentação Interativa (Swagger):** **[https://techchallengeblog.onrender.com/api](https://techchallengeblog.onrender.com/api)**
 * **Documentação Estática (Redoc):** **[https://techchallengeblog.onrender.com/docs](https://techchallengeblog.onrender.com/docs)**
 
+> **Atenção:** A aplicação está hospedada no plano gratuito do Render e hiberna ("dorme") após 15 minutos de inatividade. O **primeiro acesso pode levar de 30 a 60 segundos para "acordar" o serviço**. Após o carregamento inicial, a API funcionará normalmente.
+
 ## Guia da API (Tutorial de Uso)
 
 A API possui duas documentações geradas automaticamente, cada uma com um propósito diferente:
