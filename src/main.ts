@@ -6,6 +6,12 @@ import redoc from 'redoc-express';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: true, 
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Tech Challenge Blog API')
     .setDescription(
@@ -13,6 +19,9 @@ async function bootstrap() {
     )
     .setVersion('1.0')
     .addTag('posts', 'Operações relacionadas a postagens')
+    .addTag('users', 'Operações relacionadas a usuários')
+    .addTag('auth', 'Operações relacionadas a autenticação')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
@@ -31,6 +40,6 @@ async function bootstrap() {
 
   app.use('/docs', redoc(redocOptions));
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
