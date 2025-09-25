@@ -2,22 +2,17 @@ services:
   api:
     build: .
     container_name: tech-challenge-api
-    command: npm run start:dev
     ports:
       - "3000:3000"
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
     environment:
       - DATABASE_URL=mongodb://mongo:27017/tech-challenge-blog
+      - JWT_SECRET=suaChaveSecretaSuperForteAqui
     depends_on:
       - mongo
 
   mongo:
     image: mongo:latest
     container_name: tech-challenge-db
-    ports:
-      - "27017:27017"
     volumes:
       - mongo-data:/data/db
 

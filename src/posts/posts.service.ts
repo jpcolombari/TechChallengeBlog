@@ -43,7 +43,17 @@ export class PostsService {
     return deletedPost;
   }
 
-  async search(term: string): Promise<Post[]> {
-    return this.postModel.find({ $text: { $search: term } }).exec();
+  private escapeRegex(text: string) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
   }
+
+ async search(term: string): Promise<Post[]> {
+   const regex = new RegExp(this.escapeRegex(term), 'i');
+
+   return this.postModel
+     .find({
+       $or: [{ title: { $regex: regex } }, { content: { $regex: regex } }],
+     })
+     .exec();
+ }
 }
