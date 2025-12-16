@@ -34,7 +34,7 @@ As aplicações de front-end e back-end foram implantadas na plataforma Render e
 1.  **Pré-requisitos:** É necessário ter o `Docker` e o `Docker Compose` instalados em sua máquina.
 2.  **Clone o Repositório:**
     ```bash
-    git clone https://github.com/jpcolombari/TechChallengeBlog.git
+    git clone [https://github.com/jpcolombari/TechChallengeBlog.git](https://github.com/jpcolombari/TechChallengeBlog.git)
     cd TechChallengeBlog
     ```
 3.  **Inicie o Ambiente:** Na raiz do projeto, execute o seguinte comando para construir a imagem e iniciar os containers:
@@ -95,6 +95,45 @@ Abaixo está um guia detalhado de cada endpoint disponível.
 
 ---
 
+### **Endpoints de Autenticação (`/auth`)**
+
+#### **1. Realizar Login**
+* **Endpoint:** `POST /auth/login`
+* **Descrição:** Autentica um usuário e retorna um token JWT.
+* **Corpo da Requisição:** JSON com `email` e `password`.
+    ```json
+    {
+      "email": "professor@exemplo.com",
+      "password": "senhaForte123"
+    }
+    ```
+* **Resposta de Sucesso (`200 OK`):** Retorna um `access_token`.
+
+---
+
+### **Endpoints de Usuários (`/users`)**
+
+> 🔒 **Nota:** Todos os endpoints de usuários são protegidos e requerem o perfil de **Professor** (token JWT no header).
+
+#### **1. Criar um Novo Usuário**
+* **Endpoint:** `POST /users`
+* **Descrição:** Cria um novo usuário no sistema.
+* **Corpo da Requisição:** JSON com `email` e `password`.
+
+#### **2. Listar Usuários**
+* **Endpoint:** `GET /users`
+* **Descrição:** Retorna uma lista paginada de usuários.
+* **Parâmetros de Query (Opcionais):**
+    * `role`: Filtrar por tipo de usuário (ex: PROFESSOR).
+    * `page`: Número da página (Padrão: 1).
+    * `limit`: Quantidade de itens por página (Padrão: 10).
+
+#### **3. Excluir Usuário**
+* **Endpoint:** `DELETE /users/{id}`
+* **Descrição:** Remove um usuário específico pelo seu ID.
+
+---
+
 ### **Endpoints de Posts (`/posts`)**
 
 #### **1. Criar um Novo Post**
@@ -121,43 +160,6 @@ Abaixo está um guia detalhado de cada endpoint disponível.
 #### **6. Buscar Posts por Palavra-Chave**
 * **Endpoint:** `GET /posts/search?term={palavra-chave}`
 * **Descrição:** Retorna posts cujo título ou conteúdo corresponda ao termo de busca.
-
----
-
-### **Endpoints de Usuários (`/users`)**
-
-#### **1. Criar um Novo Usuário (Registro)**
-* **Endpoint:** `POST /users`
-* **Descrição:** Registra um novo usuário (professor) no sistema.
-* **Corpo da Requisição:** JSON com `email` e `password`.
-    ```json
-    {
-      "email": "professor@exemplo.com",
-      "password": "senhaForte123"
-    }
-    ```
-* **Resposta de Sucesso (`201 Created`):** Retorna o objeto do usuário criado (sem a senha).
-
----
-
-### **Endpoints de Autenticação (`/auth`)**
-
-#### **1. Realizar Login**
-* **Endpoint:** `POST /auth/login`
-* **Descrição:** Autentica um usuário e retorna um token JWT.
-* **Corpo da Requisição:** JSON com `email` e `password`.
-    ```json
-    {
-      "email": "professor@exemplo.com",
-      "password": "senhaForte123"
-    }
-    ```
-* **Resposta de Sucesso (`200 OK`):** Retorna um `access_token`.
-    ```json
-    {
-      "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-    }
-    ```
 
 ## 🎯 Desafios e Aprendizados
 
