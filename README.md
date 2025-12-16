@@ -119,19 +119,33 @@ Abaixo está um guia detalhado de cada endpoint disponível.
 * **Endpoint:** `POST /users`
 * **Descrição:** Cria um novo usuário (Professor ou Aluno) no sistema.
 * **Corpo da Requisição:** JSON com `name`, `email`, `password` e `role`.
+    ```json
+    {
+      "name": "Maria Silva",
+      "email": "maria@fiap.com.br",
+      "password": "senhaForte123",
+      "role": "STUDENT"
+    }
+    ```
 
 #### **2. Listar Usuários**
 * **Endpoint:** `GET /users`
 * **Descrição:** Retorna uma lista paginada de usuários.
 * **Parâmetros de Query (Opcionais):**
-    * `role`: Filtrar por tipo de usuário (ex: PROFESSOR, STUDENT).
+    * `role`: Filtrar por tipo de usuário (ex: `PROFESSOR`, `STUDENT`).
     * `page`: Número da página (Padrão: 1).
     * `limit`: Quantidade de itens por página (Padrão: 10).
 
 #### **3. Atualizar Usuário**
 * **Endpoint:** `PUT /users/{id}`
 * **Descrição:** Atualiza os dados de um usuário existente.
-* **Corpo da Requisição:** JSON com os campos a serem atualizados (ex: `name`, `email`, `role`).
+* **Corpo da Requisição:** JSON com os campos a serem atualizados.
+    ```json
+    {
+      "name": "Maria Silva Souza",
+      "email": "maria.souza@fiap.com.br"
+    }
+    ```
 
 #### **4. Excluir Usuário**
 * **Endpoint:** `DELETE /users/{id}`
