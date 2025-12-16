@@ -117,18 +117,23 @@ Abaixo está um guia detalhado de cada endpoint disponível.
 
 #### **1. Criar um Novo Usuário**
 * **Endpoint:** `POST /users`
-* **Descrição:** Cria um novo usuário no sistema.
-* **Corpo da Requisição:** JSON com `email` e `password`.
+* **Descrição:** Cria um novo usuário (Professor ou Aluno) no sistema.
+* **Corpo da Requisição:** JSON com `name`, `email`, `password` e `role`.
 
 #### **2. Listar Usuários**
 * **Endpoint:** `GET /users`
 * **Descrição:** Retorna uma lista paginada de usuários.
 * **Parâmetros de Query (Opcionais):**
-    * `role`: Filtrar por tipo de usuário (ex: PROFESSOR).
+    * `role`: Filtrar por tipo de usuário (ex: PROFESSOR, STUDENT).
     * `page`: Número da página (Padrão: 1).
     * `limit`: Quantidade de itens por página (Padrão: 10).
 
-#### **3. Excluir Usuário**
+#### **3. Atualizar Usuário**
+* **Endpoint:** `PUT /users/{id}`
+* **Descrição:** Atualiza os dados de um usuário existente.
+* **Corpo da Requisição:** JSON com os campos a serem atualizados (ex: `name`, `email`, `role`).
+
+#### **4. Excluir Usuário**
 * **Endpoint:** `DELETE /users/{id}`
 * **Descrição:** Remove um usuário específico pelo seu ID.
 
