@@ -13,8 +13,35 @@ export class PostsService {
     return this.postModel.create(createPostDto);
   }
 
-  async findAll(): Promise<Post[]> {
-    return this.postModel.find().exec();
+  async findAll(page: number = 1, limit: number = 10) {
+    const skip = (page - 1) * limit;
+
+    const [results, total] = await Promise.all([
+      this.postModel
+        .find()
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .exec(),
+      this.postModel.countDocuments().exec(),
+    ]);
+
+    const postsWithSummary = results.map((post) => {
+      const postObj = post.toObject();
+      return {
+        ...postObj,
+        summary: postObj.content.length > 100 
+          ? postObj.content.substring(0, 100) + '...' 
+          : postObj.content,
+      };
+    });
+
+    return {
+      data: postsWithSummary,
+      total,
+      page,
+      lastPage: Math.ceil(total / limit),
+    };
   }
 
   async findOne(id: string): Promise<Post> {
@@ -47,13 +74,13 @@ export class PostsService {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
   }
 
- async search(term: string): Promise<Post[]> {
-   const regex = new RegExp(this.escapeRegex(term), 'i');
+  async search(term: string): Promise<Post[]> {
+    const regex = new RegExp(this.escapeRegex(term), 'i');
 
-   return this.postModel
-     .find({
-       $or: [{ title: { $regex: regex } }, { content: { $regex: regex } }],
-     })
-     .exec();
- }
+    return this.postModel
+      .find({
+        $or: [{ title: { $regex: regex } }, { content: { $regex: regex } }],
+      })
+      .exec();
+  }
 }

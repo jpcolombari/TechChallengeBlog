@@ -34,7 +34,7 @@ As aplicações de front-end e back-end foram implantadas na plataforma Render e
 1.  **Pré-requisitos:** É necessário ter o `Docker` e o `Docker Compose` instalados em sua máquina.
 2.  **Clone o Repositório:**
     ```bash
-    git clone [https://github.com/jpcolombari/TechChallengeBlog.git](https://github.com/jpcolombari/TechChallengeBlog.git)
+    git clone https://github.com/jpcolombari/TechChallengeBlog.git
     cd TechChallengeBlog
     ```
 3.  **Inicie o Ambiente:** Na raiz do projeto, execute o seguinte comando para construir a imagem e iniciar os containers:
@@ -78,8 +78,6 @@ graph TD;
     C -- Retorna dados --> B;
     B -- Resposta HTTP (JSON) --> A;
 ```
-
-*(As seções "Descrição do Fluxo" e "Justificativas das Decisões de Arquitetura" podem ser mantidas como estão, pois já estão perfeitas).*
 
 ## 📚 Guia da API (Tutorial de Uso)
 

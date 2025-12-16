@@ -1,21 +1,30 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { UserRole } from '../entities/user.entity';
 
 export class CreateUserDto {
   @ApiProperty({
-    description: 'O nome do professor',
-    example: 'Professor Teste',
+    description: 'O nome do usuário (Professor ou Aluno)',
+    example: 'Maria Silva',
   })
   name: string;
 
   @ApiProperty({
-    description: 'O e-mail de login do professor',
-    example: 'professor@teste.com',
+    description: 'O e-mail de login',
+    example: 'maria@fiap.com.br',
   })
   email: string;
 
   @ApiProperty({
-    description: 'A senha para a conta do professor',
+    description: 'A senha de acesso',
     example: 'senhaForte123!',
   })
   password: string;
+
+  @ApiProperty({
+    description: 'O perfil do usuário (PROFESSOR ou STUDENT)',
+    enum: UserRole,
+    example: UserRole.STUDENT,
+    default: UserRole.STUDENT,
+  })
+  role: UserRole;
 }

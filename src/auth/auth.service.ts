@@ -26,8 +26,9 @@ export class AuthService {
     if (!isPasswordMatching) {
       throw new UnauthorizedException('Credenciais inválidas.');
     }
-
-    const payload = { email: user.email, sub: user._id };
+    
+    const payload = { email: user.email, sub: user._id, role: user.role };
+    
     return {
       access_token: this.jwtService.sign(payload),
     };
