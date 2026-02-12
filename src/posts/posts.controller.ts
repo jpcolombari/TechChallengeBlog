@@ -19,10 +19,23 @@ import { Roles } from '../auth/roles.decorator';
 import { RolesGuard } from '../auth/roles.guard';
 import { UserRole } from '../users/entities/user.entity';
 
+import { GeminiService } from '../gemini/gemini.service';
+
 @ApiTags('posts')
 @Controller('posts')
 export class PostsController {
-  constructor(private readonly postsService: PostsService) {}
+  constructor(
+    private readonly postsService: PostsService,
+    private readonly geminiService: GeminiService,
+  ) { }
+
+  @Post('generate-quiz')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(UserRole.PROFESSOR)
+  @ApiBearerAuth()
+  async generateQuiz(@Body() body: { content: string }) {
+    return this.geminiService.generateQuiz(body.content);
+  }
 
   @Post()
   @UseGuards(AuthGuard('jwt'), RolesGuard)

@@ -13,6 +13,13 @@ export class Post {
 
   @Prop({ required: true })
   author: string;
+
+  @Prop({ type: Object })
+  quiz?: {
+    question: string;
+    answer: boolean;
+    explanation: string;
+  };
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

@@ -18,4 +18,15 @@ export class CreatePostDto {
     example: 'João Colombari',
   })
   author: string;
+
+  @ApiProperty({
+    description: 'Quiz gerado por IA',
+    required: false,
+    type: Object,
+  })
+  quiz?: {
+    question: string;
+    answer: boolean;
+    explanation: string;
+  };
 }

@@ -7,6 +7,7 @@ services:
     environment:
       - DATABASE_URL=mongodb://mongo:27017/tech-challenge-blog
       - JWT_SECRET=suaChaveSecretaSuperForteAqui
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     depends_on:
       - mongo
 
