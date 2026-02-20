@@ -5,6 +5,7 @@ import { PostsModule } from './posts/posts.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { GeminiModule } from './gemini/gemini.module';
+import { AnswersModule } from './answers/answers.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { GeminiModule } from './gemini/gemini.module';
     UsersModule,
     AuthModule,
     GeminiModule,
+    AnswersModule,
   ],
   controllers: [],
   providers: [],

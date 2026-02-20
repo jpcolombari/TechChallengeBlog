@@ -44,6 +44,18 @@ export class UsersService implements OnModuleInit {
     return this.userModel.findOne({ email }).exec();
   }
 
+  async findOneById(id: string): Promise<UserDocument | null> {
+    const user = await this.userModel.findById(id).select('-password').exec();
+    if (!user) {
+      throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
+    }
+    return user;
+  }
+
+  async addScore(id: string, points: number): Promise<void> {
+    await this.userModel.findByIdAndUpdate(id, { $inc: { score: points } }).exec();
+  }
+
   async findAll(role?: UserRole, page: number = 1, limit: number = 10) {
     const filter = role ? { role } : {};
     const skip = (page - 1) * limit;

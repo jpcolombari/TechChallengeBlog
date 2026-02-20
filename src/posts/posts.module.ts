@@ -12,5 +12,6 @@ import { GeminiModule } from '../gemini/gemini.module';
   ],
   controllers: [PostsController],
   providers: [PostsService],
+  exports: [PostsService],
 })
 export class PostsModule { }

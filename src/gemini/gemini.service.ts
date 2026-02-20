@@ -20,10 +20,13 @@ export class GeminiService {
         try {
             const model = this.genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
+            const isExpectedTrue = Math.random() > 0.5;
+
             const prompt = `
-        Baseado no texto a seguir, gere 1 pergunta de Verdadeiro ou Falso.
+        Baseado no texto a seguir, gere 1 pergunta de interpretação (afirmação).
+        É OBRIGATÓRIO que a afirmação gerada seja ${isExpectedTrue ? 'VERDADEIRA' : 'FALSA'} em relação ao texto.
         O formato da resposta DEVE ser um JSON válido (sem markdown, apenas o JSON cru) com os campos: 
-        "question" (string), "answer" (boolean, true para verdadeiro, false para falso) e "explanation" (string curta explicando a resposta).
+        "question" (string), "answer" (boolean, obrigatoriamente ${isExpectedTrue ? 'true' : 'false'}) e "explanation" (string curta explicando a reposta com base no texto).
 
         Texto: "${content}"
       `;

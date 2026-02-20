@@ -9,8 +9,10 @@ import {
   Query,
   UseGuards,
   Put,
+  Request,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
+
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags, ApiQuery, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
@@ -25,12 +27,20 @@ import { RolesGuard } from '../auth/roles.guard';
 @Roles(UserRole.PROFESSOR)
 @ApiBearerAuth()
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Post()
   @ApiOperation({ summary: 'Criar um novo usuário (Professor ou Aluno)' })
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
+  }
+
+  @Get('me')
+  @Roles(UserRole.PROFESSOR, UserRole.STUDENT)
+  @ApiOperation({ summary: 'Obter perfil do usuário logado' })
+  getProfile(@Request() req) {
+    // req.user is populated by JwtStrategy (contains userId, username, role)
+    return this.usersService.findOneById(req.user.userId);
   }
 
   @Get()
