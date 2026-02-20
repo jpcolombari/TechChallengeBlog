@@ -91,4 +91,17 @@ export class UsersService implements OnModuleInit {
     }
     return deletedUser;
   }
+
+  async addPoints(userId: string, points: number) {
+    return this.userModel.findByIdAndUpdate(
+      userId,
+      { $inc: { points: points } }, 
+      { new: true }
+    );
+  }
+
+  async isStudent(userId: string): Promise<boolean> {
+    const user = await this.userModel.findById(userId);
+    return user?.role === 'STUDENT'; 
+  }
 }

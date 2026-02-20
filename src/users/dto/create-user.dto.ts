@@ -27,4 +27,12 @@ export class CreateUserDto {
     default: UserRole.STUDENT,
   })
   role: UserRole;
+
+  @ApiProperty({ 
+    description: 'Total de pontos acumulados pelo usuário', 
+    example: 100, 
+    default: 0
+  })
+  points: number;
+
 }

@@ -22,6 +22,9 @@ export class User {
   
   @Prop({ required: true, enum: UserRole, default: UserRole.STUDENT })
   role: UserRole;
+
+  @Prop({ default: 0 })
+  points: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
