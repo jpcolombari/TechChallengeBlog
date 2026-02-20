@@ -11,6 +11,7 @@ Este projeto é a implementação de um back-end para uma plataforma de blogging
 * **Mongoose:** ODM (Object-Document Mapper) para modelagem e interação com o MongoDB.
 * **Docker & Docker Compose:** Ferramentas para containerização da aplicação e do banco de dados.
 * **Swagger (OpenAPI) & Redoc:** Geração de documentação interativa e estática da API.
+* **Google Gemini API:** Integração com IA generativa para criação de quizzes dinâmicos.
 * **Jest:** Framework de testes para garantir a qualidade e o funcionamento da lógica de negócio.
 * **GitHub Actions:** Ferramenta de CI/CD para automação de testes e build de imagens Docker.
 
@@ -128,7 +129,11 @@ Abaixo está um guia detalhado de cada endpoint disponível.
     }
     ```
 
-#### **2. Listar Usuários**
+#### **2. Obter Perfil Logado (Retorna a Pontuação)**
+* **Endpoint:** `GET /users/me`
+* **Descrição:** Retorna os dados do usuário autenticado atual, incluindo seu `score` atualizado de gamificação.
+
+#### **3. Listar Usuários**
 * **Endpoint:** `GET /users`
 * **Descrição:** Retorna uma lista paginada de usuários.
 * **Parâmetros de Query (Opcionais):**
@@ -155,10 +160,15 @@ Abaixo está um guia detalhado de cada endpoint disponível.
 
 ### **Endpoints de Posts (`/posts`)**
 
-#### **1. Criar um Novo Post**
+#### **1. Gerar Quiz com IA (Gemini)**
+* **Endpoint:** `POST /posts/generate-quiz`
+* **Descrição:** Utiliza o Google Gemini para analisar o conteúdo enviado e gerar uma pergunta imprevisível de Verdadeiro ou Falso, além de uma explicação instrucional.
+* **Corpo da Requisição:** JSON com `content`.
+
+#### **2. Criar um Novo Post**
 * **Endpoint:** `POST /posts`
-* **Descrição:** Cria uma nova postagem no blog. Requer autenticação.
-* **Corpo da Requisição:** JSON com `title`, `content`, `author`.
+* **Descrição:** Cria uma nova postagem no blog, que também pode conter a estrutura do Quiz de IA gerado previamente (no campo `quiz`). Requer autenticação.
+* **Corpo da Requisição:** JSON com `title`, `content`, `author`, e opcionalmente `quiz`.
 
 #### **2. Listar Todos os Posts**
 * **Endpoint:** `GET /posts`
@@ -179,6 +189,25 @@ Abaixo está um guia detalhado de cada endpoint disponível.
 #### **6. Buscar Posts por Palavra-Chave**
 * **Endpoint:** `GET /posts/search?term={palavra-chave}`
 * **Descrição:** Retorna posts cujo título ou conteúdo corresponda ao termo de busca.
+
+---
+
+### **Endpoints de Respostas e Gamificação (`/answers`)**
+
+> 🎮 **Nota:** Estes endpoints gerenciam o motor de quizzes e dão pontos ao aluno (`STUDENT`) quando respondem corretamente.
+
+#### **1. Submeter Resposta ao Quiz**
+* **Endpoint:** `POST /answers/{postId}`
+* **Descrição:** Registra a tentativa de um estudante. Bloqueia tentativas duplicadas e retorna a explicação correta. Se a resposta (`answer`) estiver certa, atribui `+10` na propriedade `score` do estudante.
+* **Corpo da Requisição:** JSON com `answer` (boolean).
+
+#### **2. Consultar Resposta Única (`/me`)**
+* **Endpoint:** `GET /answers/{postId}/me`
+* **Descrição:** Retorna o status de resolução do post atual para o logado ("respondido: true/false").
+
+#### **3. Consultar Todos os Posts Respondidos**
+* **Endpoint:** `GET /answers/me/all`
+* **Descrição:** Busca agressiva focada no frontend para listagem. Retorna um array com os IDs de todos os posts que o estudante já tentou responder, otimizando o carregamento da Home.
 
 ## 🎯 Desafios e Aprendizados
 
