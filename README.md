@@ -101,6 +101,11 @@ Abaixo está um guia detalhado de cada endpoint disponível.
 #### **1. Realizar Login**
 * **Endpoint:** `POST /auth/login`
 * **Descrição:** Autentica um usuário e retorna um token JWT.
+
+> 🔑 **Credenciais de Teste (Professor Padrão):**
+> * **E-mail:** `professor@professor.com`
+> * **Senha:** `Teste@123`
+
 * **Corpo da Requisição:** JSON com `email` e `password`.
     ```json
     {

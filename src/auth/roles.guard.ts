@@ -1,11 +1,9 @@
 import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from 'src/auth/roles.decorator';
-import { UserRole } from 'src/users/entities/user.entity';
-
-@Injectable()
+import { ROLES_KEY } from './roles.decorator';
+import { UserRole } from '../users/entities/user.entity';
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(private reflector: Reflector) { }
 
   canActivate(context: ExecutionContext): boolean {
     const requiredRoles = this.reflector.getAllAndOverride<UserRole[]>(ROLES_KEY, [
@@ -20,13 +18,13 @@ export class RolesGuard implements CanActivate {
     const { user } = context.switchToHttp().getRequest();
 
     if (!user || !user.role) {
-       throw new ForbiddenException('Acesso negado: Perfil não identificado.');
+      throw new ForbiddenException('Acesso negado: Perfil não identificado.');
     }
 
     const hasRole = requiredRoles.some((role) => user.role === role);
-    
+
     if (!hasRole) {
-        throw new ForbiddenException('Acesso restrito a administradores/professores.');
+      throw new ForbiddenException('Acesso restrito a administradores/professores.');
     }
 
     return true;

@@ -4,6 +4,8 @@ import { PostsService } from './posts.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Post } from './entities/post.entity';
 
+import { GeminiService } from '../gemini/gemini.service';
+
 describe('PostsController', () => {
   let controller: PostsController;
 
@@ -16,6 +18,10 @@ describe('PostsController', () => {
     search: jest.fn(),
   };
 
+  const mockGeminiService = {
+    generateQuiz: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PostsController],
@@ -24,6 +30,10 @@ describe('PostsController', () => {
         {
           provide: getModelToken(Post.name),
           useValue: {}, // Um mock vazio é suficiente aqui
+        },
+        {
+          provide: GeminiService,
+          useValue: mockGeminiService,
         },
       ],
     })

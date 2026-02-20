@@ -8,6 +8,7 @@ const mockPost = {
   title: 'Test Post',
   content: 'Test Content',
   author: 'Test Author',
+  toObject: function () { return this; }
 };
 
 const createPostDto = {
@@ -20,10 +21,20 @@ describe('PostsService', () => {
   let service: PostsService;
   let model: Model<Post>;
 
+  const mockQuery = {
+    sort: jest.fn().mockReturnThis(),
+    skip: jest.fn().mockReturnThis(),
+    limit: jest.fn().mockReturnThis(),
+    exec: jest.fn().mockResolvedValue([mockPost]),
+  };
+
+  const mockCountQuery = {
+    exec: jest.fn().mockResolvedValue(1),
+  };
+
   const mockPostModel = {
-    find: jest.fn().mockReturnValue({
-      exec: jest.fn().mockResolvedValue([mockPost]),
-    }),
+    find: jest.fn().mockReturnValue(mockQuery),
+    countDocuments: jest.fn().mockReturnValue(mockCountQuery),
     create: jest.fn().mockResolvedValue(createPostDto),
   };
 
@@ -47,10 +58,19 @@ describe('PostsService', () => {
   });
 
   describe('findAll', () => {
-    it('should return an array of posts', async () => {
-      const posts = await service.findAll();
-      expect(posts).toEqual([mockPost]);
+    it('should return paginated posts', async () => {
+      const result = await service.findAll();
+      expect(result.data).toEqual([
+        {
+          ...mockPost,
+          summary: mockPost.content.substring(0, 100),
+        },
+      ]);
+      expect(result.total).toBe(1);
+      expect(result.page).toBe(1);
+      expect(result.lastPage).toBe(1);
       expect(model.find).toHaveBeenCalled();
+      expect(model.countDocuments).toHaveBeenCalled();
     });
   });
 
